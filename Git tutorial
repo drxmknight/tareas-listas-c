@@ -1,0 +1,163 @@
+----TUTORIAL GIT-----
+
+----Configuracion (Inicial)---- 
+
+	Para poder obtener y asignar las variables de configuracion que controlan git se usa:
+		
+		- git config
+
+	Estas variables estan en:
+
+		- /etc/gitconfig : con las variables de todos los usuarios y del sistema. Se accede con "git config --system".
+		- ~/.gitconfig : especificas del usuario. Se accede con "git config --global".
+
+	La primera vez que se usa git, se debe configurar el nombre de usuario y email, dado que se usa	esta informacion para los futuros commits:
+
+		- git config --global user.name "John Doe"
+		- git config --global user.email johndoe@example.com
+
+	Para mostrar toda la configuracion hasta el momento:
+
+		- git config --list
+
+
+----Crear repositorio----
+	
+	Git usa principalmente 3 secciones principales. El "working directory", "staging area" y "git directory (repository)". 
+	El "git directory" o "repository" es donde se almacenan los datos finales del proyecto. Esto es lo que se obtiene cuando se hace un "git pull" desde otro repositorio o cuando se inicia localmente con "git init".
+	El "working directory" contiene los archivos con los que se esta trabajando actualmente. Los archivos se marcan como "tracked" o "untracked". Los "tracked" son a los que se le mantiene seguimiento de la version.
+	La "staging area" son los archivos "tracked" del working directory que se han modificado, y contiene la informacion de lo que ira en el siguiente commit. 
+
+	- Los archivos se modifican en el working directory.
+	- Se agregan las modificaciones al staging area (solo de los "tracked").
+	- El commit agrega los cambios permanentemente al git directory (local repository).
+
+	Dicho esto, para crear el repositorio localmente, se debe ejecutar el comando en la carpeta del proyecto:
+
+	- git init
+
+	Esto crea el subdirectorio ".git", donde van todos los archivos del repositorio necesarios.
+	Luego de usar "git init", el repositorio se encuentra inicialmente vacio. 
+
+	Para agregar archivos y empezar a controlar sus versiones:
+
+	- git add <filename>
+
+	O para agregar todos los archivos del directorio actual:
+
+	- git add --all
+
+	Este primer "git add" agrega los archivos desde el working directory al staging area, ya que inicialmente este ultimo esta vacio.
+
+	Para subir los archivos desde el staging area al repositorio, se hace el primer commit:
+
+	- git commit -m "inicio de proyecto u otro comentario"
+
+	Los archivos que no se agregan con "git add", no son marcados como "tracked", por lo que no se suben al repositorio. 
+	Luego de este commit, se suben al repositorio y quedan en el working directory para ser modificados. 
+
+
+----Clonar repositorio----
+
+	Git usa diferentes protocolos para transferir archivos. En este caso se usara el protocolo "git://". Tambien existen los protocolos "http(s)://" o "user@server:/path.git" 
+	
+	Para obtener una copia de un repositorio (remoto) y crear un working directory:
+
+	- git clone git://github.com/schacon/grit.git (ejemplo)
+
+	Para crear un working directory con otro nombre (distinto a "grit"):
+
+	- git clone git://github.com/schacon/grit.git nuevonombre
+
+
+----Controlar archivos----
+	
+	El comando "git add" tiene dos propositos principales:
+	- Marcar como "tracked" los archivos a los cuales se quiere controlar.
+	- Agregar los archivos modificados desde el working directory al staging area.
+
+	Es decir, cada vez que modificamos un archivo, este no se agrega automaticamente al staging area, por lo que hay que usar este comando para agregarlo.
+
+	- git add [--all] <filename>
+
+	Esto se puede comprobar con el comando:
+
+	- git status
+
+	el cual entrega la informacion de los archivos "untracked", y los "tracked" que han sido modificados.
+
+
+----Ignorar archivos----
+
+	Se puede crear un archivo nombrado ".gitignore". Ejemplo:
+		$ cat .gitignore
+		*.[oa]  //.o and .a extensions
+		*~ 		//temporary files
+	con la finalidad de ignorar los archivos con ciertas extensiones por el comando add.
+
+
+----Ingresar los cambios----
+	
+	Una vez se han agregado todos los cambios al staging area, se usa el comando:
+
+	- git commit -m "comentario sobre lo modificado"
+
+	Esto agregara los cambios desde el staging area al repositorio local.
+
+	Se puede ver el historial de commits hechos con:
+
+	- git log [--stat]
+
+
+----Eliminar archivos----
+
+	Para eliminar archivos del staging area, se debe usar el comando:
+
+	- git rm <filename> 
+
+	Esto solo se puede hacer si se ha eliminado el archivo previamente del working directory. De no ser asi, se puede eliminar de ambos sectores (esto elimina el archivo local) usando:
+
+	- git rm -f <filename>
+
+	Si se quiere eliminar el archivo solo del staggiing area, pero no desde el working directory:
+
+	- git rm --cached <filename>
+
+	Este comando, ademas de eliminar el archivo del staging area, lo marca como "untracked". Funciona como el inverso de "git add".
+
+	Si se quiere eliminar archivos que han sido agregados al staging area, pero dejando el archivo como "tracked", se usa el comando:
+
+	- git reset HEAD <filename>
+
+	Si se quiere volver un archivo a su ultima version (ultimo commit):
+
+	- git checkout -- <filename>
+
+----Repositorios remotos----
+	
+	Para ver los repositorios remotos configurados:
+
+	- git remote 
+
+	Para agregar repositorios remotos:
+
+	- git remote add <shortname> <url>
+
+	Para agregar los cambios desde el repositorio local al remoto:
+
+	- git push <remote-name> <branch-name>
+
+	donde remote-name es el nombre del servidor remoto y branch-name es el nombre de la rama del proyecto. Si se hace un "git clone", remote-name queda por defecto como "origin". Entonces, si se quieren subir el trabajo local a la rama "master", se debe hacer:
+
+	- git push origin master
+
+	Para obtener informacion sobre un repositorio remoto:
+
+	- git remote show <remote-name>
+
+	Para renombrar un repositorio remoto:
+
+	- git remote rename <current-name> <final-name>
+
+
+
