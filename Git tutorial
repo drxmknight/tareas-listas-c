@@ -159,5 +159,10 @@
 
 	- git remote rename <current-name> <final-name>
 
+	En estricto rigor, no se pueden modificar los commits una vez se ha hecho un push al repositorio remoto. Lo que si se puede hacer, es modificar el repositorio local y forzar un push.
+	Para forzar un push al servidor remoto:
 
+	- git push <repository> +<branch>
+	- git push --force-with-lease <repository> <branch>
 
+	Cuidado! Esto sobreescribe todo lo que se encuentra en el repositorio remoto.
