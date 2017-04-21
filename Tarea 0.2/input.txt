@@ -1,0 +1,11 @@
+--Curso
+LP
+--Alumnos
+"Pedro Henriquez" C1 76 10%, C2 80 20%, C3 30 30%
+"Pablo Perez" C1 76 10%, C2 80 20%, C3 30 30%
+--Curso
+TALF
+--Alumnos
+"Pedro Henriquez" C1 69 20%, C2 80 40%, C3 40 20%
+"Pablo Perez" C1 76 20%, C2 80 40%, C3 30 20%
+"Andrea Mendez" C1 76 20%, C2 50 40%, C3 20 20%
