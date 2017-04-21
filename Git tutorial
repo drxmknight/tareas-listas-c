@@ -108,6 +108,10 @@
 
 	- git log [--stat]
 
+	Para comparar el staging area y el working directory:
+
+	- git diff [--staged] (para ver solo lo que ira en el siguiente commit)
+
 
 ----Eliminar archivos----
 
@@ -132,6 +136,7 @@
 	Si se quiere volver un archivo a su ultima version (ultimo commit):
 
 	- git checkout -- <filename>
+
 
 ----Repositorios remotos----
 	
