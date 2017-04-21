@@ -123,7 +123,7 @@
 
 	- git rm -f <filename>
 
-	Si se quiere eliminar el archivo solo del staggiing area, pero no desde el working directory:
+	Si se quiere eliminar el archivo solo del staging area, pero no desde el working directory:
 
 	- git rm --cached <filename>
 
