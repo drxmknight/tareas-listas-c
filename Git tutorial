@@ -39,6 +39,11 @@
 	Esto crea el subdirectorio ".git", donde van todos los archivos del repositorio necesarios.
 	Luego de usar "git init", el repositorio se encuentra inicialmente vacio. 
 
+	Se puede configurar un usuario diferente para cada repo (local):
+
+	- git config --local user.name "John Doe"
+	- git config --local user.email johndoe@example.com
+
 	Para agregar archivos y empezar a controlar sus versiones:
 
 	- git add <filename>

@@ -16,40 +16,6 @@ int pop(struct list *stack);
 void freeStack (struct list *stack);
 void printStack(struct list stack);
 
-void swapnNodes(struct list stack, struct node *a, struct node *b)
-{
-	if (stack == NULL) 
-		return;
-	int found = 0;
-	struct node *temp = stack->head;
-	if (stack->head != n1) 
-		while (temp != NULL && !found) 
-			if (temp->next == n1)
-				found = 1;
-
-}
-
-struct list *getPrevNode(struct list *stack, struct node *f)
-{
-	if(stack->head == NULL)
-		return NULL;
-	struct node *temp = stack->head;
-	struct node *prev_f = NULL;
-	while (temp != NULL && !found) {
-		
-	}
-}
-
-void bubbleSort(struct list *stack)
-{	
-	if (stack->head == NULL || stack->head->next == NULL)
-		return;
-	struct node *temp = stack->head->next;
-	while (temp != NULL) {
-
-	}
-} 
-
 int main() 
 {
 	int option = 1;
