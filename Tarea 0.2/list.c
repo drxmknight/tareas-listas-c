@@ -135,7 +135,6 @@ struct student_list copyStudentList(const struct student_list *students)
 	return newStudentList;
 }
 
-
 void desc_bubbleSort(struct student_list *students)
 {
 	struct student_node *temp = students->first;	
@@ -161,6 +160,7 @@ void desc_bubbleSort(struct student_list *students)
 		n = n - 1;
 	} while (swapped);
 }
+
 
 void swapStudent(struct student_node *s1, struct student_node *s2)
 {
