@@ -76,6 +76,7 @@ void printCourses(const struct course_list *courses)
 		return;
 	}
 
+	printf("\n");
 	while (courseTemp != NULL) {
 		printf("%s\n", courseTemp->course.name);
 		struct student_node *studentTemp = courseTemp->course.students.first;
@@ -116,14 +117,16 @@ struct student_list copyStudentList(const struct student_list *students)
 	newStudentList.first = NULL;
 	newStudentList.last = NULL;
 	newStudentList.length = 0;
+
 	struct student_node *studentTemp = students->first;
 
 	while(studentTemp != NULL) {
-		struct grade_node *gradeTemp = studentTemp->student.grades.first;
 		struct grade_list newGradeList;
-		newGradeList.length = 0;
 		newGradeList.first = NULL;
-
+		newGradeList.length = 0;
+		
+		struct grade_node *gradeTemp = studentTemp->student.grades.first;
+		
 		while(gradeTemp != NULL) {
 			newGrade_node(&newGradeList, (struct grade){gradeTemp->grade.grade, gradeTemp->grade.weight});
 			gradeTemp = gradeTemp->next;
@@ -135,23 +138,23 @@ struct student_list copyStudentList(const struct student_list *students)
 	return newStudentList;
 }
 
-void desc_bubbleSort(struct student_list *students)
+void descendingBubbleSort(struct student_list *students)
 {
-	struct student_node *temp = students->first;	
+	int i;
+	int swapped;
+	int n = (int)students->length;
+
+	struct student_node *temp;
 
 	if (students->length <= 1) {
 		return;
 	}
 
-	int i;
-	int swapped;
-	int n = (int)students->length;
-
 	do {
 		swapped = 0;
 		temp = students->first;
 		for (i = 1; i < n; i++) {
-			if (course_student_waverage(&temp->student) < course_student_waverage(&temp->next->student)){
+			if (course_student_waverage(&temp->student) <= course_student_waverage(&temp->next->student)){
 				swapStudent(temp, temp->next);
 				swapped = 1;
 			}
@@ -170,14 +173,15 @@ void swapStudent(struct student_node *s1, struct student_node *s2)
 }
 
 
-struct student_list mergeList(struct student_list *l1, struct student_list *l2)
+void mergeStudentList(struct student_list *l1, struct student_list *l2)
 {
 	if (l1->first == NULL) {
-		return *l2;
+		return;
 	}
 
-	l1->last->next = l2->first;
-	l1->last = l2->last;
-
-	return *l1;
+	if (l2->first != NULL) {
+		l1->last->next = l2->first;
+		l1->last = l2->last;
+		l1->length += l2->length; 
+	}
 }

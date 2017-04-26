@@ -8,13 +8,15 @@ La tarea consiste en implementar un programa que sea capaz de cargar, a partir d
 
 + Puede haber un curso vacio, o un alumno sin notas. Por lo tanto, para crear estos, se necesita solo el nombre del curso o el nombre y apellido del alumno. Los otros parametros se inicializan en NULL o 0 segun corresponda.
 
-+ Para la funcion "course_load_file", se uso un flag para poder separar las caracteristicas de un Curso y de un Alumno. No se debe alterar el orden de los if, ya que cambia el funcionamiento de la funcion.
++ Las inserciones de nodos se hacen al final de la listas.
 
-+ Para la funcion "course_clean", se limpio desde adentro hacia afuera (notas->alumnos->cursos) los nodos correspondiente a las listas. Tambien se tuvo cuidado de limpiar la memoria pedida con "strdup" para los nombres.
++ Para la funcion "course_load_file", se uso un flag para poder separar las caracteristicas de un Curso y de un Alumno. No se debe alterar el orden de los if (3), ya que cambia el funcionamiento de la funcion.
+
++ Para la funcion "course_clean", se limpio desde adentro hacia afuera (notas->alumnos->cursos) los nodos correspondiente a las listas. Tambien se tuvo cuidado en limpiar la memoria pedida con "strdup" para los nombres.
 
 + Para la implementacion de la funcion "course_top_students":
-	* Se copiaron todas las listas de estudiantes.
-	* Se ordenaron de mayor a menor (segun promedio).
+	* Se copiaron todas las listas de estudiantes (para no modificar las originales).
+	* Se ordenaron de mayor a menor (segun promedio usando bubblesort).
 	* Se dejaron los nodos acordes al parametro "top". El resto se libera.
 	* Se juntarons las listas.
 	* Se volvio a ordenar de mayor a menor.
