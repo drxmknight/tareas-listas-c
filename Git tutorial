@@ -18,7 +18,7 @@
 
 	Para mostrar toda la configuracion hasta el momento:
 
-		- git config --list
+		- git config [--global] [--local] --list
 
 
 ----Crear repositorio----
@@ -164,6 +164,14 @@
 	Para obtener informacion sobre un repositorio remoto:
 
 	- git remote show <remote-name>
+
+	O varios repositorios:
+
+	- git remove -v
+
+	Para eliminar un repositorio:
+
+	- git remote rm <remote-name>
 
 	Para renombrar un repositorio remoto:
 

@@ -25,7 +25,7 @@ int course_load_file(const char *filename, struct course_list* courses)
 			fgets(line, MAXLINE, courseFile);
 			char *temp = line;
 			char *courseName = strsep(&temp, "\n");
-			newCourse__node(courses, courseName);
+			newCourse_node(courses, (struct course){strdup(courseName), {NULL, NULL, 0}});
 			studentFlag = 0;
 		}
 
@@ -33,13 +33,13 @@ int course_load_file(const char *filename, struct course_list* courses)
 			char *temp = &line[1];
 			char *firstname = strsep(&temp, " ");
 			char *lastname = strsep(&temp, "\"");
-			newStudent__node(&courses->last->course.students, firstname, lastname);
+			newStudent_node(&courses->last->course.students, (struct student){strdup(firstname), strdup(lastname), {NULL, 0}});
 			while (temp != NULL) {
 				temp = temp + 4;
 				char *fullgrade = strsep(&temp, ",");
 				char *grade = strsep(&fullgrade, " ");
 				char *percent = strsep(&fullgrade, "%%");
-				newGrade__node(&courses->last->course.students.last->student.grades, strtol(grade, NULL, 10), (double)strtol(percent, NULL, 10)/100);
+				newGrade_node(&courses->last->course.students.last->student.grades, (struct grade){strtol(grade, NULL, 10), (double)strtol(percent, NULL, 10)/100});
 			}
 		}
 
@@ -49,7 +49,6 @@ int course_load_file(const char *filename, struct course_list* courses)
 	}
 
 	fclose(courseFile);
-
 	return 0;
 }
 
@@ -65,6 +64,33 @@ int course_student_waverage(const struct student* student)
 	}
 	return (int)(average + 0.5);
 }
+
+
+/*struct student_list course_top_students(const struct course_list* courses, unsigned top)
+{
+	struct student_list top_list;
+	struct course_node *courseTemp = courses->first;
+
+	while (courseTemp != NULL) {
+		struct student_list studentListTemp = copyStudentList(&courses->first->course.students);
+		desc_bubbleSort(&studentListTemp);
+		struct student_node *studentTemp = studentListTemp.first;
+
+		int it = studentListTemp.length - top;
+		struct student_node *lastTemp = studentListTemp.last;
+		
+		while (it) {
+			studentListTemp.last = lastTemp->prev;
+			free(lastTemp);
+			lastTemp = studentListTemp.last;
+			it--;
+		}
+		courseTemp = courseTemp->next;
+	}	
+
+	return top_list;
+}
+*/
 
 void course_clean(struct course_list *course_list)
 {
@@ -98,7 +124,5 @@ void course_clean(struct course_list *course_list)
 		free(courseTemp->course.name);
 		free(courseTemp);
 		courseTemp = course_list->first;
-
-
 	}
 }

@@ -12,7 +12,7 @@ main: $(OBJS)
 main.o: main.c 
 	$(CC) $(CFLAGS) main.c
 
-list.o: list.c list.h
+list.o: list.c list.h course.o
 	$(CC) $(CFLAGS) list.c
 
 course.o: course.c course.h
