@@ -28,7 +28,6 @@ void newGrade_node(struct grade_list *grades, struct grade grade)
 		temp->next = newgrade;
 	}	
 	grades->length++;
-
 }
 
 
@@ -47,16 +46,15 @@ void newStudent_node(struct student_list *students, struct student student)
 
 	students->last = newstudent;
 	students->length++;
-
 }
 
 
 void newCourse_node(struct course_list *courses, struct course course) 
 {
 	struct course_node *newcourse = malloc(sizeof(struct course_node));
-	newcourse->course = course;
 	newcourse->next = NULL;
 	newcourse->prev = courses->last;
+	newcourse->course = course;
 
 	if (courses->last != NULL) {
 		courses->last->next = newcourse;
@@ -99,6 +97,7 @@ void printCourses(const struct course_list *courses)
 	}
 }
 
+
 void printStudentList(const struct student_list *students)
 {
 	struct student_node *studentTemp = students->first;
@@ -109,6 +108,33 @@ void printStudentList(const struct student_list *students)
 	}	
 	printf("\n");
 }
+
+
+struct student_list copyStudentList(const struct student_list *students)
+{
+	struct student_list newStudentList;	
+	newStudentList.first = NULL;
+	newStudentList.last = NULL;
+	newStudentList.length = 0;
+	struct student_node *studentTemp = students->first;
+
+	while(studentTemp != NULL) {
+		struct grade_node *gradeTemp = studentTemp->student.grades.first;
+		struct grade_list newGradeList;
+		newGradeList.length = 0;
+		newGradeList.first = NULL;
+
+		while(gradeTemp != NULL) {
+			newGrade_node(&newGradeList, (struct grade){gradeTemp->grade.grade, gradeTemp->grade.weight});
+			gradeTemp = gradeTemp->next;
+		}
+		newStudent_node(&newStudentList, (struct student){strdup(studentTemp->student.first_name), strdup(studentTemp->student.last_name), newGradeList});
+		studentTemp = studentTemp->next;
+	}
+	
+	return newStudentList;
+}
+
 
 void desc_bubbleSort(struct student_list *students)
 {
@@ -136,37 +162,13 @@ void desc_bubbleSort(struct student_list *students)
 	} while (swapped);
 }
 
-struct student_list copyStudentList(const struct student_list *students)
-{
-	struct student_list newStudentList;	
-	newStudentList.first = NULL;
-	newStudentList.last = NULL;
-	newStudentList.length = 0;
-	struct student_node *studentTemp = students->first;
-
-	while(studentTemp != NULL) {
-		struct grade_node *gradeTemp = studentTemp->student.grades.first;
-		struct grade_list newGradeList;
-		newGradeList.length = 0;
-		newGradeList.first = NULL;
-
-		while(gradeTemp != NULL) {
-			newGrade_node(&newGradeList, (struct grade){gradeTemp->grade.grade, gradeTemp->grade.weight});
-			gradeTemp = gradeTemp->next;
-		}
-		newStudent_node(&newStudentList, (struct student){strdup(studentTemp->student.first_name), strdup(studentTemp->student.last_name), newGradeList});
-		studentTemp = studentTemp->next;
-	}
-	
-	return newStudentList;
-}
-
 void swapStudent(struct student_node *s1, struct student_node *s2)
 {
 	struct student temp = s1->student;
 	s1->student = s2->student;
 	s2->student = temp;
 }
+
 
 struct student_list mergeList(struct student_list *l1, struct student_list *l2)
 {
