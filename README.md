@@ -1,3 +1,3 @@
-# LP
+# Tarea Listas C
 
-Ramo de Lenguajes de Programacion de la Universidad Tecnico Federico Santa Maria, Chile.
+Tarea basica de listas en C
